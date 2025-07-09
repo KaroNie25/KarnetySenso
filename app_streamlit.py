@@ -68,13 +68,21 @@ def main():
         st.write(f"📅 Ważny do: {dane['wazny_do']}")
         pokaz_pieczatki(dane["ilosc_pieczatek"])
 
-        if dane["ilosc_pieczatek"] < MAX_PIECZATEK:
-            if st.button("Przybij pieczątkę"):
-                dane["ilosc_pieczatek"] += 1
-                zapisz_karnety(karnety)
-                st.rerun()
-        else:
-            st.info("ℹ️ Karnet jest już pełny.")
+        kol1, kol2 = st.columns(2)
+        with kol1:
+            if dane["ilosc_pieczatek"] < MAX_PIECZATEK:
+                if st.button("Przybij pieczątkę"):
+                    dane["ilosc_pieczatek"] += 1
+                    zapisz_karnety(karnety)
+                    st.rerun()
+            else:
+                st.info("ℹ️ Karnet jest już pełny.")
+        with kol2:
+            if dane["ilosc_pieczatek"] > 0:
+                if st.button("Usuń pieczątkę"):
+                    dane["ilosc_pieczatek"] -= 1
+                    zapisz_karnety(karnety)
+                    st.rerun()
 
     elif numer:
         st.error("❌ Nie znaleziono karnetu.")
